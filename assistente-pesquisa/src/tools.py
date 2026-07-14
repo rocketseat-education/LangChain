@@ -2,6 +2,8 @@ import requests
 from langchain.tools import tool
 from langchain_tavily import TavilySearch
 
+from src.rag import buscar_contexto
+
 # Códigos de tempo (padrão WMO) -> descrição (os mais comuns).
 _CODIGOS_TEMPO = {
     0: "céu limpo", 1: "predominantemente limpo", 2: "parcialmente nublado",
@@ -55,4 +57,4 @@ def previsao_tempo(local: str) -> str:
 
 
 # Lista de tools do projeto — o agente recebe todas de uma vez (vai crescer).
-ferramentas = [previsao_tempo, busca_web]
+ferramentas = [previsao_tempo, busca_web, buscar_contexto]

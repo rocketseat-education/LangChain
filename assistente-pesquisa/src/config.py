@@ -10,6 +10,12 @@ load_dotenv()
 MODEL_ID = os.getenv("MODEL_ID", "openai:gpt-4o-mini")
 AGENT_MODEL_ID = os.getenv("AGENT_MODEL_ID", MODEL_ID)
 
+EMBEDDINGS_ID = os.getenv("EMBEDDINGS_ID", "openai:text-embedding-3-small")
+
+WEAVIATE_URL = os.getenv("WEAVIATE_URL", "")
+WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY", "")
+WEAVIATE_INDEX = os.getenv("WEAVIATE_INDEX", "AssistenteDocs")   # nome da coleção
+
 def validar_ambiente() -> None:
     """Confere se as chaves essenciais existem.
 
