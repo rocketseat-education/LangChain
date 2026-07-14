@@ -1,15 +1,21 @@
-from src.config import MODEL_ID, validar_ambiente
+from src.config import MODEL_ID
+from src.llm import testar_modelo
 
 def main() -> None:
-    # 1) Falha cedo se faltar configuração (ex.: a chave da OpenAI).
-    validar_ambiente()
+    print("Assistente de Pesquisa e Resumo — testando o modelo de IA")
+    print(f"Modelo configurado: {MODEL_ID}\n")
 
-    # 2) Por enquanto, só confirmamos que o projeto está de pé.
-    print("Assistente de Pesquisa e Resumo — projeto inicializado ✅")
-    print(f"Modelo configurado: {MODEL_ID}")
-    print("Próximo passo: conectar o modelo de IA (Aula 3).")
+    # Trata problemas de configuração com uma mensagem amigável.
+    try:
+        resposta = testar_modelo()
+    except RuntimeError as e:
+        # Ex.: chave ausente — validar_ambiente() levanta RuntimeError.
+        print(f"⚠️  Configuração incompleta: {e}")
+        return
 
+    print("Resposta do modelo:")
+    print(resposta)
+    print("\n✅ Integração com o modelo funcionando! Próximo: o agente base (Aula 4).")
 
-# Permite rodar com:  python -m src.main
 if __name__ == "__main__":
     main()
