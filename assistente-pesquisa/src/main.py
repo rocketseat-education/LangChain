@@ -11,6 +11,7 @@ def main() -> None:
         return
 
     agente = criar_assistente()          # cria o agente UMA vez, fora do loop
+    config = {"configurable": {"thread_id": "cli-1"}, "recursion_limit": 12}
     print("🔎 Assistente de Pesquisa (digite 'sair' para encerrar)\n")
 
     while True:
@@ -20,7 +21,8 @@ def main() -> None:
             break
         try:
             resposta = agente.invoke(
-                {"messages": [{"role": "user", "content": pergunta}]}
+                {"messages": [{"role": "user", "content": pergunta}]},
+                config
             )
             print(resposta["messages"][-1].content, "\n")
         except Exception as e:
