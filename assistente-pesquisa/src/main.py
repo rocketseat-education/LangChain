@@ -1,6 +1,14 @@
 from src.assistente import criar_assistente
 from src.config import validar_ambiente
 
+def exibir(resumo):
+    """Mostra a resposta estruturada (título, pontos, fontes)."""
+    print(f"\n📌 {resumo.titulo}")
+    for ponto in resumo.pontos:
+        print(f"  • {ponto}")
+    if resumo.fontes:
+        print("Fontes:", ", ".join(resumo.fontes))
+    print()
 
 def main() -> None:
     # Falha cedo se faltar alguma chave obrigatória (Aula 2/3).
@@ -24,7 +32,7 @@ def main() -> None:
                 {"messages": [{"role": "user", "content": pergunta}]},
                 config
             )
-            print(resposta["messages"][-1].content, "\n")
+            exibir(resposta["structured_response"])
         except Exception as e:
             print(f"⚠️  Não consegui responder: {e}\n")
 
