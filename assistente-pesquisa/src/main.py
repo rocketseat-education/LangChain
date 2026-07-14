@@ -1,21 +1,31 @@
-from src.config import MODEL_ID
-from src.llm import testar_modelo
+from src.assistente import criar_assistente
+from src.config import validar_ambiente
+
 
 def main() -> None:
-    print("Assistente de Pesquisa e Resumo — testando o modelo de IA")
-    print(f"Modelo configurado: {MODEL_ID}\n")
-
-    # Trata problemas de configuração com uma mensagem amigável.
+    # Falha cedo se faltar alguma chave obrigatória (Aula 2/3).
     try:
-        resposta = testar_modelo()
+        validar_ambiente()
     except RuntimeError as e:
-        # Ex.: chave ausente — validar_ambiente() levanta RuntimeError.
         print(f"⚠️  Configuração incompleta: {e}")
         return
 
-    print("Resposta do modelo:")
-    print(resposta)
-    print("\n✅ Integração com o modelo funcionando! Próximo: o agente base (Aula 4).")
+    agente = criar_assistente()          # cria o agente UMA vez, fora do loop
+    print("🔎 Assistente de Pesquisa (digite 'sair' para encerrar)\n")
+
+    while True:
+        pergunta = input("> ").strip()
+        if pergunta.lower() in {"sair", "exit", ""}:
+            print("Até a próxima! 👋")
+            break
+        try:
+            resposta = agente.invoke(
+                {"messages": [{"role": "user", "content": pergunta}]}
+            )
+            print(resposta["messages"][-1].content, "\n")
+        except Exception as e:
+            print(f"⚠️  Não consegui responder: {e}\n")
+
 
 if __name__ == "__main__":
     main()

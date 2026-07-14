@@ -8,7 +8,7 @@ load_dotenv()
 # ID do modelo padrão — trocável em um só lugar (ou via .env).
 # Lembre: o ID muda, mas a API do LangChain não.
 MODEL_ID = os.getenv("MODEL_ID", "openai:gpt-4o-mini")
-
+AGENT_MODEL_ID = os.getenv("AGENT_MODEL_ID", MODEL_ID)
 
 def validar_ambiente() -> None:
     """Confere se as chaves essenciais existem.
