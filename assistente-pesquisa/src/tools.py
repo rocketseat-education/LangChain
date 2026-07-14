@@ -1,5 +1,6 @@
 import requests
 from langchain.tools import tool
+from langchain_tavily import TavilySearch
 
 # Códigos de tempo (padrão WMO) -> descrição (os mais comuns).
 _CODIGOS_TEMPO = {
@@ -9,6 +10,7 @@ _CODIGOS_TEMPO = {
     # ... demais códigos WMO
 }
 
+busca_web = TavilySearch(max_results=5)
 
 @tool
 def previsao_tempo(local: str) -> str:
@@ -53,4 +55,4 @@ def previsao_tempo(local: str) -> str:
 
 
 # Lista de tools do projeto — o agente recebe todas de uma vez (vai crescer).
-ferramentas = [previsao_tempo]
+ferramentas = [previsao_tempo, busca_web]
